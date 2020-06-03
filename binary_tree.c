@@ -22,3 +22,28 @@ void insert_node(Node root, Comparer compare, Element e)
     }
     *p_walker = create_node(e);
 }
+
+void print_in_order(Node root, Displayer display)
+{
+    if (root == NULL)
+        return;
+    print_in_order(root->left, display);
+    display(root);
+    print_in_order(root->right, display);
+}
+void print_pre_order(Node root, Displayer display)
+{
+    if (root == NULL)
+        return;
+    display(root);
+    print_pre_order(root->left, display);
+    print_pre_order(root->right, display);
+}
+void print_post_order(Node root, Displayer display)
+{
+    if (root == NULL)
+        return;
+    print_post_order(root->left, display);
+    print_post_order(root->right, display);
+    display(root);
+}

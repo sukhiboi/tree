@@ -21,11 +21,11 @@ typedef struct node
 
 typedef node *Node;
 typedef Bool (*Comparer)(Element, Element);
+typedef void (*Displayer)(Node);
 
 Node create_node(Element);
 void insert_node(Node, Comparer, Element);
-Bool search(Node, Comparer, Element);
-void print_in_order(Node);
-void print_pre_order(Node);
-void print_post_order(Node);
+void print_in_order(Node, Displayer);
+void print_pre_order(Node, Displayer);
+void print_post_order(Node, Displayer);
 #endif
