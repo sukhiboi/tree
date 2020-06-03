@@ -10,6 +10,13 @@ typedef enum
     True
 } Bool;
 
+typedef enum
+{
+    Less, 
+    Equal, 
+    Greater
+} Equality;
+
 typedef void *Element;
 
 typedef struct node
@@ -20,7 +27,7 @@ typedef struct node
 } node;
 
 typedef node *Node;
-typedef Bool (*Comparer)(Element, Element);
+typedef Equality (*Comparer)(Element, Element);
 typedef void (*Displayer)(Node);
 
 Node create_node(Element);
@@ -28,4 +35,6 @@ void insert_node(Node, Comparer, Element);
 void print_in_order(Node, Displayer);
 void print_pre_order(Node, Displayer);
 void print_post_order(Node, Displayer);
+Bool search(Node, Comparer, Element);
+
 #endif

@@ -15,7 +15,7 @@ void insert_node(Node root, Comparer compare, Element e)
     Node *p_walker = &root;
     while (*p_walker != NULL)
     {
-        if (compare(e, (*p_walker)->element))
+        if (compare(e, (*p_walker)->element) == Less)
             p_walker = &(*p_walker)->left;
         else
             p_walker = &(*p_walker)->right;
@@ -46,4 +46,20 @@ void print_post_order(Node root, Displayer display)
     print_post_order(root->left, display);
     print_post_order(root->right, display);
     display(root);
+}
+
+Bool search(Node root, Comparer compare, Element e)
+{
+    Node *p_walker = &root;
+    while (*p_walker != NULL)
+    {
+        Equality result = compare(e, (*p_walker)->element);
+        if (result == Equal)
+            return True;
+        if (result == Less)
+            p_walker = &(*p_walker)->left;
+        else
+            p_walker = &(*p_walker)->right;
+    }
+    return False;
 }

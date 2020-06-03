@@ -4,7 +4,7 @@
 typedef int *Int;
 
 Element create_int_element(int);
-Bool int_comparer(Element, Element);
+Equality int_comparer(Element, Element);
 void display(Node);
 
 Element create_int_element(int value)
@@ -14,9 +14,13 @@ Element create_int_element(int value)
     return element;
 }
 
-Bool int_comparer(Element e1, Element e2)
+Equality int_comparer(Element e1, Element e2)
 {
-    return (*(Int)(e1) < *(Int)(e2));
+    if (*(Int)(e1) == *(Int)(e2))
+        return Equal;
+    if (*(Int)(e1) < *(Int)(e2))
+        return Less;
+    return Greater;
 }
 
 void display(Node e)
@@ -25,7 +29,7 @@ void display(Node e)
 }
 
 int main()
-{ 
+{
     //5, 3, 8, 1, 4, 7, 9
     Node tree = create_node(create_int_element(5));
     insert_node(tree, int_comparer, create_int_element(3));
@@ -34,11 +38,6 @@ int main()
     insert_node(tree, int_comparer, create_int_element(4));
     insert_node(tree, int_comparer, create_int_element(7));
     insert_node(tree, int_comparer, create_int_element(9));
-    print_in_order(tree, display);
-    printf("\n");
-    print_pre_order(tree, display);
-    printf("\n");
-    print_post_order(tree, display);
-    printf("\n");
+    printf("%d\n", search(tree, int_comparer, create_int_element(2)));
     return 0;
 }
