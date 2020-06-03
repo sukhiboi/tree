@@ -21,5 +21,7 @@ Bool int_comparer(Element e1, Element e2)
 int main()
 {
     Node tree = create_node(create_int_element(12));
+    insert_node(tree, int_comparer, create_int_element(11));
+    insert_node(tree, int_comparer, create_int_element(13));
     return 0;
 }

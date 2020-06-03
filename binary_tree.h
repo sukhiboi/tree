@@ -23,7 +23,7 @@ typedef node *Node;
 typedef Bool (*Comparer)(Element, Element);
 
 Node create_node(Element);
-Node insert_node(Node, Comparer, Element);
+void insert_node(Node, Comparer, Element);
 Bool search(Node, Comparer, Element);
 void print_in_order(Node);
 void print_pre_order(Node);
