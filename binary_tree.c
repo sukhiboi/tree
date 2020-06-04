@@ -15,10 +15,9 @@ void insert_node(Node root, Comparer compare, Element e)
     Node *p_walker = &root;
     while (*p_walker != NULL)
     {
+        p_walker = &(*p_walker)->right;
         if (compare(e, (*p_walker)->element) == Less)
             p_walker = &(*p_walker)->left;
-        else
-            p_walker = &(*p_walker)->right;
     }
     *p_walker = create_node(e);
 }
@@ -53,13 +52,12 @@ Bool search(Node root, Comparer compare, Element e)
     Node *p_walker = &root;
     while (*p_walker != NULL)
     {
+        p_walker = &(*p_walker)->right;
         Equality result = compare(e, (*p_walker)->element);
         if (result == Equal)
             return True;
         if (result == Less)
             p_walker = &(*p_walker)->left;
-        else
-            p_walker = &(*p_walker)->right;
     }
     return False;
 }
