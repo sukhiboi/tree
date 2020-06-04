@@ -37,52 +37,60 @@ const search = function (tree, value) {
   return search(tree.right, value);
 };
 
-/**
- * 1. if node is leaf...
- * 2. if node left is empty
- * 3. if node right is empty
- */
-
-const getParent = function (parent, tree, value) {
-  if (tree == null) return null;
-  if (tree.value == value) return parent;
+const getParent = function (tree, value) {
+  const isCorrectNode =
+    (tree.left && tree.left.value == value) ||
+    (tree.right && tree.right.value == value) ||
+    tree.value == value;
+  if (isCorrectNode) return tree;
   if (value < tree.value) {
-    return getParent(tree, tree.left, value);
+    return getParent(tree.left, value);
+  } else {
+    return getParent(tree.right, value);
   }
-  return getParent(tree, tree.right, value);
 };
 
-const getCompatibleNode = function (node) {
-  if (node.left == null) return node;
-  let compatibleNode = node.left;
-  while (compatibleNode.right != null) compatibleNode = compatibleNode.right;
-  return compatibleNode;
+const getMaxNode = function (tree) {
+  if (tree.right == null) return tree;
+  return getMaxNode(tree.right);
 };
 
-const deleteLeafNode = function (tree, node) {
-  const parent = getParent(tree, tree, node.value);
-  if (parent.left.value == node.value) parent.left = null;
-  if (parent.right.value == node.value) parent.right = null;
+const getMinNode = function (tree) {
+  if (tree.left == null) return tree;
+  return getMinNode(tree.left);
 };
 
-const deleteNode = function (tree, node) {
-  let compatibleNode = getCompatibleNode(node);
-  node.value = compatibleNode.value;
-  if (compatibleNode.left == null && compatibleNode.right == null)
-    return deleteLeafNode(tree, compatibleNode);
-  deleteNode(tree, compatibleNode);
+const getCompatibleNode = function (tree) {
+  if (tree.left != null) return getMaxNode(tree.left);
+  if (tree.right != null) return getMinNode(tree.right);
+  return null;
+};
+
+const getNodeToDelete = function (parent, value) {
+  if (parent.right && parent.right.value == value) return parent.right;
+  return parent.left;
+};
+
+const deleteLeafNode = function (parent, node) {
+  if (parent.right && parent.right.value == node.value) parent.right = null;
+  if (parent.left && parent.left.value == node.value) parent.left = null;
+};
+
+const deleteNode = function (tree, node_to_delete) {
+  const compatibleNode = getCompatibleNode(node_to_delete);
+  const node_to_delete_parent = getParent(tree, node_to_delete.value);
+  if (compatibleNode == null)
+    return deleteLeafNode(node_to_delete_parent, node_to_delete);
+  const parent = getParent(tree, compatibleNode.value);
+  let temp = compatibleNode.value;
+  node_to_delete.value = compatibleNode.value;
+  compatibleNode.value = temp;
+  if (compatibleNode.right == null && compatibleNode.left == null) {
+    return deleteLeafNode(parent, compatibleNode);
+  }
+  deleteNode(compatibleNode, compatibleNode);
 };
 
 const tree = [10, 5, 20].reduce(insert, null);
 deleteNode(tree, tree);
 console.log(tree);
-
-/**
-DOING WITH MAX OF LEFT
-STEP1: Choose which element to delete.
-STEP2: Get the deepest right node from the left child of the tree (call it compatible)
-STEP3: Swap the value's of the both the nodes (i.e. the compatible and the one you want to delete)
-STEP4: Check if compatible node have any left child if yes
-            then make the child the right child of the grandparent (compatible's parent) node
-STEP5: Delete the compatible
- */
