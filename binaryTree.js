@@ -30,8 +30,13 @@ const printPostOrder = function (tree) {
   process.stdout.write(`${tree.value} `);
 };
 
+const search = function (tree, value) {
+  if (tree == null) return false;
+  if (tree.value == value) return true;
+  if (value < tree.value) return search(tree.left, value);
+  return search(tree.right, value);
+};
+
 const tree = [5, 3, 8, 1, 4, 7, 9].reduce(insert, null);
-// console.log(tree);
-console.log(printInOrder(tree));
-console.log(printPreOrder(tree));
-console.log(printPostOrder(tree));
+// [2, 5, 3, 8, 1, 4, 7, 9].forEach(i => console.log(search(tree, i)));
+// console.log(tree)
