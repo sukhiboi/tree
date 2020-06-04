@@ -15,9 +15,10 @@ void insert_node(Node root, Comparer compare, Element e)
     Node *p_walker = &root;
     while (*p_walker != NULL)
     {
-        p_walker = &(*p_walker)->right;
         if (compare(e, (*p_walker)->element) == Less)
             p_walker = &(*p_walker)->left;
+        else
+            p_walker = &(*p_walker)->right;
     }
     *p_walker = create_node(e);
 }
@@ -60,4 +61,73 @@ Bool search(Node root, Comparer compare, Element e)
             p_walker = &(*p_walker)->left;
     }
     return False;
+}
+
+Node get_parent(Node root, Element e, Comparer compare)
+{
+    Bool left_child_check = root->left != NULL && compare(root->left->element, e) == Equal;
+    Bool right_child_check = root->right != NULL && compare(root->right->element, e) == Equal;
+    Bool self_check = compare(root->element, e) == Equal;
+    if (left_child_check || right_child_check || self_check)
+        return root;
+    if (compare(e, root->element) == Less)
+        return get_parent(root->left, e, compare);
+    return get_parent(root->right, e, compare);
+}
+
+Node get_max_node(Node root)
+{
+    if (root->right == NULL)
+        return root;
+    return get_max_node(root->right);
+}
+
+Node get_min_node(Node root)
+{
+    if (root->left == NULL)
+        return root;
+    return get_min_node(root->left);
+}
+
+Node get_compatible_node(Node root)
+{
+    if (root->left != NULL)
+        return get_max_node(root->left);
+    if (root->right != NULL)
+        return get_min_node(root->right);
+    return NULL;
+}
+
+void free_node(Node node)
+{
+    free(node->element);
+    free(node);
+}
+
+void delete_leaf_node(Node parent, Node to_be_deleted, Comparer compare)
+{
+    if (parent->left != NULL && compare(parent->left->element, to_be_deleted->element) == Equal)
+        parent->left = NULL;
+    if (parent->right != NULL && compare(parent->right->element, to_be_deleted->element) == Equal)
+        parent->right = NULL;
+    free_node(to_be_deleted);
+}
+
+Node delete (Node root, Node node_to_delete, Comparer compare, Copier copy)
+{
+    Node compatible_node = get_compatible_node(node_to_delete);
+    Node node_to_delete_parent = get_parent(root, node_to_delete->element, compare);
+    if (compatible_node == NULL)
+    {
+        delete_leaf_node(node_to_delete_parent, node_to_delete, compare);
+        return root;
+    }
+    Node parent = get_parent(root, compatible_node->element, compare);
+    node_to_delete->element = copy(compatible_node->element);
+    if (compatible_node->left == NULL && compatible_node->right == NULL)
+    {
+        delete_leaf_node(parent, compatible_node, compare);
+        return root;
+    }
+    return delete (compatible_node, compatible_node, compare, copy);
 }

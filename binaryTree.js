@@ -66,11 +66,6 @@ const getCompatibleNode = function (tree) {
   return null;
 };
 
-const getNodeToDelete = function (parent, value) {
-  if (parent.right && parent.right.value == value) return parent.right;
-  return parent.left;
-};
-
 const deleteLeafNode = function (parent, node) {
   if (parent.right && parent.right.value == node.value) parent.right = null;
   if (parent.left && parent.left.value == node.value) parent.left = null;
@@ -82,15 +77,13 @@ const deleteNode = function (tree, node_to_delete) {
   if (compatibleNode == null)
     return deleteLeafNode(node_to_delete_parent, node_to_delete);
   const parent = getParent(tree, compatibleNode.value);
-  let temp = compatibleNode.value;
   node_to_delete.value = compatibleNode.value;
-  compatibleNode.value = temp;
   if (compatibleNode.right == null && compatibleNode.left == null) {
     return deleteLeafNode(parent, compatibleNode);
   }
   deleteNode(compatibleNode, compatibleNode);
 };
 
-const tree = [10, 5, 20].reduce(insert, null);
+const tree = [10, 5, 1].reduce(insert, null);
 deleteNode(tree, tree);
 console.log(tree);

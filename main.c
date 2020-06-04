@@ -28,16 +28,20 @@ void display(Node e)
     printf("%d ", *(Int)(e->element));
 }
 
+Element copy(Element e)
+{
+    return create_int_element(*(Int)(e));
+}
+
 int main()
 {
     //5, 3, 8, 1, 4, 7, 9
-    Node tree = create_node(create_int_element(5));
-    insert_node(tree, int_comparer, create_int_element(3));
-    insert_node(tree, int_comparer, create_int_element(8));
+    Node tree = create_node(create_int_element(10));
+    insert_node(tree, int_comparer, create_int_element(5));
+    insert_node(tree, int_comparer, create_int_element(20));
     insert_node(tree, int_comparer, create_int_element(1));
-    insert_node(tree, int_comparer, create_int_element(4));
-    insert_node(tree, int_comparer, create_int_element(7));
-    insert_node(tree, int_comparer, create_int_element(9));
-    printf("%d\n", search(tree, int_comparer, create_int_element(2)));
+    insert_node(tree, int_comparer, create_int_element(25));
+    tree = delete (tree, tree->left, int_comparer, copy);
+    print_in_order(tree, display);
     return 0;
 }
