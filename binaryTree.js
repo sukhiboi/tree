@@ -74,11 +74,12 @@ const deleteNode = function (tree, node_to_delete) {
   const compatibleNode = getCompatibleNode(node_to_delete);
   const parent = getParent(tree, compatibleNode.value);
   node_to_delete.value = compatibleNode.value;
-  if (compatibleNode.right == null && compatibleNode.left == null)
-    return deleteLeafNode(parent, compatibleNode);
+  if (compatibleNode.right == null && compatibleNode.left == null) {
+    deleteLeafNode(parent, compatibleNode);
+    return tree;
+  }
   deleteNode(compatibleNode, compatibleNode);
 };
 
 const tree = [10, 5, 20, 1, 8, 15, 25].reduce(insert, null);
-deleteNode(tree, tree);
-printInOrder(tree);
+printInOrder(deleteNode(tree, tree));
