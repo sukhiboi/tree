@@ -78,8 +78,8 @@ const deleteNode = function (tree, node_to_delete) {
     deleteLeafNode(parent, compatibleNode);
     return tree;
   }
-  deleteNode(compatibleNode, compatibleNode);
+  return deleteNode(tree, compatibleNode);
 };
 
-const tree = [10, 5, 20, 1, 8, 15, 25].reduce(insert, null);
-printInOrder(deleteNode(tree, tree));
+const tree = [10, 20, 30].reduce(insert, null);
+console.log(deleteNode(tree, tree));
