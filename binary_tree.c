@@ -65,8 +65,8 @@ Bool search(Node root, Comparer compare, Element e)
 
 Node get_parent(Node root, Element e, Comparer compare)
 {
-    Bool left_child_check = root->left != NULL && compare(root->left->element, e) == Equal;
-    Bool right_child_check = root->right != NULL && compare(root->right->element, e) == Equal;
+    Bool left_child_check = root->left != NULL && root->left->element == e;
+    Bool right_child_check = root->right != NULL && root->right->element == e;
     if (left_child_check || right_child_check)
         return root;
     if (compare(e, root->element) == Less)
@@ -105,9 +105,9 @@ void free_node(Node node)
 
 void delete_leaf_node(Node parent, Node to_be_deleted, Comparer compare)
 {
-    if (parent->left != NULL && compare(parent->left->element, to_be_deleted->element) == Equal)
+    if (parent->left != NULL && parent->left == to_be_deleted)
         parent->left = NULL;
-    if (parent->right != NULL && compare(parent->right->element, to_be_deleted->element) == Equal)
+    if (parent->right != NULL && parent->right == to_be_deleted)
         parent->right = NULL;
     free_node(to_be_deleted);
 }
