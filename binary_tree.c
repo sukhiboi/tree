@@ -67,8 +67,7 @@ Node get_parent(Node root, Element e, Comparer compare)
 {
     Bool left_child_check = root->left != NULL && compare(root->left->element, e) == Equal;
     Bool right_child_check = root->right != NULL && compare(root->right->element, e) == Equal;
-    Bool self_check = compare(root->element, e) == Equal;
-    if (left_child_check || right_child_check || self_check)
+    if (left_child_check || right_child_check)
         return root;
     if (compare(e, root->element) == Less)
         return get_parent(root->left, e, compare);
@@ -95,7 +94,7 @@ Node get_compatible_node(Node root)
         return get_max_node(root->left);
     if (root->right != NULL)
         return get_min_node(root->right);
-    return NULL;
+    return root;
 }
 
 void free_node(Node node)
@@ -116,15 +115,9 @@ void delete_leaf_node(Node parent, Node to_be_deleted, Comparer compare)
 Node delete (Node root, Node node_to_delete, Comparer compare, Copier copy)
 {
     Node compatible_node = get_compatible_node(node_to_delete);
-    Node node_to_delete_parent = get_parent(root, node_to_delete->element, compare);
-    if (compatible_node == NULL)
-    {
-        delete_leaf_node(node_to_delete_parent, node_to_delete, compare);
-        return root;
-    }
     Node parent = get_parent(root, compatible_node->element, compare);
     node_to_delete->element = copy(compatible_node->element);
-    if (compatible_node->left == NULL && compatible_node->right == NULL)
+    if (compatible_node->right == NULL && compatible_node->left == NULL)
     {
         delete_leaf_node(parent, compatible_node, compare);
         return root;

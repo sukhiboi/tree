@@ -40,8 +40,10 @@ int main()
     insert_node(tree, int_comparer, create_int_element(5));
     insert_node(tree, int_comparer, create_int_element(20));
     insert_node(tree, int_comparer, create_int_element(1));
+    insert_node(tree, int_comparer, create_int_element(8));
+    insert_node(tree, int_comparer, create_int_element(15));
     insert_node(tree, int_comparer, create_int_element(25));
-    tree = delete (tree, tree->left, int_comparer, copy);
+    tree = delete (tree, tree->right, int_comparer, copy);
     print_in_order(tree, display);
     return 0;
 }

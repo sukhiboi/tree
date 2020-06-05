@@ -40,8 +40,7 @@ const search = function (tree, value) {
 const getParent = function (tree, value) {
   const isCorrectNode =
     (tree.left && tree.left.value == value) ||
-    (tree.right && tree.right.value == value) ||
-    tree.value == value;
+    (tree.right && tree.right.value == value);
   if (isCorrectNode) return tree;
   if (value < tree.value) {
     return getParent(tree.left, value);
@@ -63,7 +62,7 @@ const getMinNode = function (tree) {
 const getCompatibleNode = function (tree) {
   if (tree.left != null) return getMaxNode(tree.left);
   if (tree.right != null) return getMinNode(tree.right);
-  return null;
+  return tree;
 };
 
 const deleteLeafNode = function (parent, node) {
@@ -73,17 +72,13 @@ const deleteLeafNode = function (parent, node) {
 
 const deleteNode = function (tree, node_to_delete) {
   const compatibleNode = getCompatibleNode(node_to_delete);
-  const node_to_delete_parent = getParent(tree, node_to_delete.value);
-  if (compatibleNode == null)
-    return deleteLeafNode(node_to_delete_parent, node_to_delete);
   const parent = getParent(tree, compatibleNode.value);
   node_to_delete.value = compatibleNode.value;
-  if (compatibleNode.right == null && compatibleNode.left == null) {
-    return deleteLeafNode(parent, compatibleNode);
-  }
+  if (compatibleNode.right == null && compatibleNode.left == null)
+    return deleteLeafNode(parent, node_to_delete);
   deleteNode(compatibleNode, compatibleNode);
 };
 
-const tree = [10, 5, 1].reduce(insert, null);
+const tree = [10, 5, 20, 1, 8, 15, 25].reduce(insert, null);
 deleteNode(tree, tree);
-console.log(tree);
+printInOrder(tree);
