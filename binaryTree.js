@@ -82,4 +82,4 @@ const deleteNode = function (tree, node_to_delete) {
 };
 
 const tree = [10, 20, 30].reduce(insert, null);
-console.log(deleteNode(tree, tree));
+printInOrder(deleteNode(tree, tree));

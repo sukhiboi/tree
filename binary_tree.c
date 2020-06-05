@@ -122,5 +122,5 @@ Node delete (Node root, Node node_to_delete, Comparer compare, Copier copy)
         delete_leaf_node(parent, compatible_node, compare);
         return root;
     }
-    return delete (compatible_node, compatible_node, compare, copy);
+    return delete (root, compatible_node, compare, copy);
 }
