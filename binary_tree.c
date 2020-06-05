@@ -125,3 +125,23 @@ Node delete (Node root, Node node_to_delete, Comparer compare, Copier copy)
     }
     return delete (root, compatible_node, compare, copy);
 }
+
+Node right_rotate(Node node_to_rotate)
+{
+    if (node_to_rotate == NULL || node_to_rotate->left == NULL)
+        return node_to_rotate;
+    Node node_to_rotate_left = node_to_rotate->left;
+    node_to_rotate->left = node_to_rotate_left->right;
+    node_to_rotate_left->right = node_to_rotate;
+    return node_to_rotate_left;
+}
+
+Node left_rotate(Node node_to_rotate)
+{
+    if (node_to_rotate == NULL || node_to_rotate->right == NULL)
+        return node_to_rotate;
+    Node node_to_rotate_right = node_to_rotate->right;
+    node_to_rotate->right = node_to_rotate_right->left;
+    node_to_rotate_right->left = node_to_rotate;
+    return node_to_rotate_right;
+}

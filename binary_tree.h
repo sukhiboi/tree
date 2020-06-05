@@ -37,6 +37,8 @@ void print_in_order(Node, Displayer);
 void print_pre_order(Node, Displayer);
 void print_post_order(Node, Displayer);
 Bool search(Node, Comparer, Element);
+Node right_rotate(Node node_to_rotate);
+Node left_rotate(Node node_to_rotate);
 Node delete (Node root, Node node_to_delete, Comparer compare, Copier copy);
 
 #endif

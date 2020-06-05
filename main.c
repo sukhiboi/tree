@@ -37,9 +37,10 @@ int main()
 {
     //5, 3, 8, 1, 4, 7, 9
     Node tree = create_node(create_int_element(10));
+    insert_node(tree, int_comparer, create_int_element(6));
     insert_node(tree, int_comparer, create_int_element(20));
-    insert_node(tree, int_comparer, create_int_element(30));
-    tree = delete (tree, tree, int_comparer, copy);
-    print_in_order(tree, display);
+    print_in_order(right_rotate(tree), display);
+    printf("\n");
+    // print_in_order(left_rotate(tree), display);
     return 0;
 }
