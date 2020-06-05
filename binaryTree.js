@@ -75,7 +75,7 @@ const deleteNode = function (tree, node_to_delete) {
   const parent = getParent(tree, compatibleNode.value);
   node_to_delete.value = compatibleNode.value;
   if (compatibleNode.right == null && compatibleNode.left == null)
-    return deleteLeafNode(parent, node_to_delete);
+    return deleteLeafNode(parent, compatibleNode);
   deleteNode(compatibleNode, compatibleNode);
 };
 
