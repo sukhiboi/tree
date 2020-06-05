@@ -116,6 +116,7 @@ Node delete (Node root, Node node_to_delete, Comparer compare, Copier copy)
 {
     Node compatible_node = get_compatible_node(node_to_delete);
     Node parent = get_parent(root, compatible_node->element, compare);
+    free(node_to_delete->element);
     node_to_delete->element = copy(compatible_node->element);
     if (compatible_node->right == NULL && compatible_node->left == NULL)
     {
