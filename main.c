@@ -35,12 +35,14 @@ Element copy(Element e)
 
 int main()
 {
-    //5, 3, 8, 1, 4, 7, 9
     Node tree = create_node(create_int_element(10));
-    insert_node(tree, int_comparer, create_int_element(6));
+    insert_node(tree, int_comparer, create_int_element(5));
     insert_node(tree, int_comparer, create_int_element(20));
-    print_in_order(right_rotate(tree), display);
+    insert_node(tree, int_comparer, create_int_element(3));
+    insert_node(tree, int_comparer, create_int_element(1));
+    print_in_order(tree, display);
     printf("\n");
-    // print_in_order(left_rotate(tree), display);
+    Node new_tree = balance(tree, int_comparer);
+    print_in_order(new_tree, display);
     return 0;
 }

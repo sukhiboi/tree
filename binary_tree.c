@@ -145,3 +145,33 @@ Node left_rotate(Node node_to_rotate)
     node_to_rotate_right->left = node_to_rotate;
     return node_to_rotate_right;
 }
+
+void get_nodes(Node *array, Node root, int *index)
+{
+    if (root == NULL)
+        return;
+    get_nodes(array, root->left, index);
+    array[*index] = root;
+    *index = *index + 1;
+    get_nodes(array, root->right, index);
+}
+
+Node do_balance(Node *nodes, int start_idx, int end_idx, Comparer compare)
+{
+    if (start_idx > end_idx)
+        return NULL;
+    int mid_idx = (int)(start_idx + end_idx) / 2;
+    Node root = create_node(nodes[mid_idx]->element);
+    root->left = do_balance(nodes, start_idx, mid_idx - 1, compare);
+    root->right = do_balance(nodes, mid_idx + 1, end_idx, compare);
+    return root;
+}
+
+Node balance(Node root, Comparer compare)
+{
+    Node *nodes = malloc(sizeof(Node) * 20);
+    int *index = malloc(sizeof(int));
+    *index = 0;
+    get_nodes(nodes, root, index);
+    return do_balance(nodes, 0, *index - 1, compare);
+}

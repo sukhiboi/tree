@@ -40,5 +40,6 @@ Bool search(Node, Comparer, Element);
 Node right_rotate(Node node_to_rotate);
 Node left_rotate(Node node_to_rotate);
 Node delete (Node root, Node node_to_delete, Comparer compare, Copier copy);
+Node balance(Node root, Comparer compare);
 
 #endif
