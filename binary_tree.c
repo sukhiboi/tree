@@ -156,14 +156,14 @@ void get_nodes(Node *array, Node root, int *index)
     get_nodes(array, root->right, index);
 }
 
-Node do_balance(Node *nodes, int start_idx, int end_idx, Comparer compare)
+Node perform_balance(Node *nodes, int start_idx, int end_idx, Comparer compare)
 {
     if (start_idx > end_idx)
         return NULL;
     int mid_idx = (int)(start_idx + end_idx) / 2;
     Node root = create_node(nodes[mid_idx]->element);
-    root->left = do_balance(nodes, start_idx, mid_idx - 1, compare);
-    root->right = do_balance(nodes, mid_idx + 1, end_idx, compare);
+    root->left = perform_balance(nodes, start_idx, mid_idx - 1, compare);
+    root->right = perform_balance(nodes, mid_idx + 1, end_idx, compare);
     return root;
 }
 
@@ -173,5 +173,5 @@ Node balance(Node root, Comparer compare)
     int *index = malloc(sizeof(int));
     *index = 0;
     get_nodes(nodes, root, index);
-    return do_balance(nodes, 0, *index - 1, compare);
+    return perform_balance(nodes, 0, *index - 1, compare);
 }
