@@ -1,8 +1,6 @@
 #include <stdlib.h>
 #include "binary_tree.h"
 
-typedef int *Int;
-
 Element create_int_element(int);
 Equality int_comparer(Element, Element);
 void display(Node);
@@ -40,7 +38,6 @@ int main()
     insert_node(tree, int_comparer, create_int_element(20));
     insert_node(tree, int_comparer, create_int_element(3));
     insert_node(tree, int_comparer, create_int_element(1));
-    delete (tree, tree, int_comparer, copy);
-    print_in_order(tree, display);
+    print_in_order(balance(tree, int_comparer), display);
     return 0;
 }

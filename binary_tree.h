@@ -18,7 +18,7 @@ typedef enum
 } Equality;
 
 typedef void *Element;
-
+typedef int *Int;
 typedef struct node
 {
     Element element;

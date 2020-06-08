@@ -151,14 +151,33 @@ Node left_rotate(Node node_to_rotate)
     return node_to_rotate_right;
 }
 
-void get_nodes(Node *array, Node root, int *index)
+void count_nodes(Node root, Int count)
 {
     if (root == NULL)
         return;
-    get_nodes(array, root->left, index);
+    count_nodes(root->left, count);
+    *count = *count + 1;
+    count_nodes(root->right, count);
+}
+
+void store_nodes_in_order(Node *array, Node root, int *index)
+{
+    if (root == NULL)
+        return;
+    store_nodes_in_order(array, root->left, index);
     array[*index] = root;
     *index = *index + 1;
-    get_nodes(array, root->right, index);
+    store_nodes_in_order(array, root->right, index);
+}
+
+Node *get_node_in_order(Node root, Int index)
+{
+    Int node_count = malloc(sizeof(Int));
+    *node_count = 0;
+    count_nodes(root, node_count);
+    Node *nodes = malloc(sizeof(Node) * (*node_count));
+    store_nodes_in_order(nodes, root, index);
+    return nodes;
 }
 
 Node perform_balance(Node *nodes, int start_idx, int end_idx, Comparer compare)
@@ -174,9 +193,8 @@ Node perform_balance(Node *nodes, int start_idx, int end_idx, Comparer compare)
 
 Node balance(Node root, Comparer compare)
 {
-    Node *nodes = malloc(sizeof(Node) * 20);
-    int *index = malloc(sizeof(int));
+    Int index = malloc(sizeof(int));
     *index = 0;
-    get_nodes(nodes, root, index);
+    Node *nodes = get_node_in_order(root, index);
     return perform_balance(nodes, 0, *index - 1, compare);
 }
