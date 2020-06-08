@@ -198,3 +198,52 @@ Node balance(Node root, Comparer compare)
     Node *nodes = get_node_in_order(root, index);
     return perform_balance(nodes, 0, *index - 1, compare);
 }
+
+int max(int x, int y)
+{
+    if (x > y)
+        return x;
+    else
+        return y;
+}
+
+int get_tree_depth(Node root)
+{
+    if (root == NULL)
+        return 0;
+    int left_tree_depth = get_tree_depth(root->left);
+    int right_tree_depth = get_tree_depth(root->right);
+    int height = max(left_tree_depth, right_tree_depth) + 1;
+    return height;
+}
+
+Bool check_if_node_balanced(Node root)
+{
+    int left_tree_depth = get_tree_depth(root->left);
+    int right_tree_depth = get_tree_depth(root->right);
+    Bool left_check = left_tree_depth == 1 || left_tree_depth == 0;
+    Bool right_check = right_tree_depth == 1 || right_tree_depth == 0;
+    if (left_check && right_check)
+        return True;
+    else
+        return False;
+}
+
+Node balance_with_rotation(Node root, Comparer compare)
+{
+    if (!check_if_node_balanced(root))
+    {
+        int left_depth = get_tree_depth(root->left);
+        int right_depth = get_tree_depth(root->right);
+        if (left_depth > right_depth)
+        {
+            root = right_rotate(root);
+        }
+        else
+        {
+            root = left_rotate(root);
+        }
+        printf("%d\n", *(int *)(root->element));
+    }
+    return root;
+}
