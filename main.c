@@ -40,9 +40,7 @@ int main()
     insert_node(tree, int_comparer, create_int_element(20));
     insert_node(tree, int_comparer, create_int_element(3));
     insert_node(tree, int_comparer, create_int_element(1));
+    delete (tree, tree, int_comparer, copy);
     print_in_order(tree, display);
-    printf("\n");
-    Node new_tree = balance(tree, int_comparer);
-    print_in_order(new_tree, display);
     return 0;
 }

@@ -103,6 +103,11 @@ void free_node(Node node)
     free(node);
 }
 
+Bool is_leaf_node(Node root)
+{
+    return root->right == NULL && root->left == NULL;
+}
+
 void delete_leaf_node(Node parent, Node to_be_deleted, Comparer compare)
 {
     if (parent->left != NULL && parent->left == to_be_deleted)
@@ -118,7 +123,7 @@ Node delete (Node root, Node node_to_delete, Comparer compare, Copier copy)
     Node parent = get_parent(root, compatible_node->element, compare);
     free(node_to_delete->element);
     node_to_delete->element = copy(compatible_node->element);
-    if (compatible_node->right == NULL && compatible_node->left == NULL)
+    if (is_leaf_node(compatible_node))
     {
         delete_leaf_node(parent, compatible_node, compare);
         return root;
