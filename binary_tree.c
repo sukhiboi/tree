@@ -213,37 +213,27 @@ int get_tree_depth(Node root)
         return 0;
     int left_tree_depth = get_tree_depth(root->left);
     int right_tree_depth = get_tree_depth(root->right);
-    int height = max(left_tree_depth, right_tree_depth) + 1;
-    return height;
+    return max(left_tree_depth, right_tree_depth) + 1;
 }
 
-Bool check_if_node_balanced(Node root)
+Bool get_balance_factor(Node root)
 {
     int left_tree_depth = get_tree_depth(root->left);
     int right_tree_depth = get_tree_depth(root->right);
-    Bool left_check = left_tree_depth == 1 || left_tree_depth == 0;
-    Bool right_check = right_tree_depth == 1 || right_tree_depth == 0;
-    if (left_check && right_check)
-        return True;
-    else
-        return False;
+    return right_tree_depth - left_tree_depth;
 }
 
 Node balance_with_rotation(Node root, Comparer compare)
 {
-    if (!check_if_node_balanced(root))
+    if (root == NULL)
+        return root;
+    int balance_factor = get_balance_factor(root);
+    if (balance_factor >= -1 && balance_factor <= 1)
     {
-        int left_depth = get_tree_depth(root->left);
-        int right_depth = get_tree_depth(root->right);
-        if (left_depth > right_depth)
-        {
-            root = right_rotate(root);
-        }
-        else
-        {
-            root = left_rotate(root);
-        }
-        printf("%d\n", *(int *)(root->element));
+        root->left = balance_with_rotation(root->left, compare);
+        root->right = balance_with_rotation(root->right, compare);
+        return root;
     }
-    return root;
+    root = balance_factor < 0 ? right_rotate(root) : left_rotate(root);
+    return balance_with_rotation(root, compare);
 }

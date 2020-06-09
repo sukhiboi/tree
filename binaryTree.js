@@ -81,5 +81,57 @@ const deleteNode = function (tree, node_to_delete) {
   return deleteNode(tree, compatibleNode);
 };
 
-const tree = [10, 20, 30].reduce(insert, null);
-printInOrder(deleteNode(tree, tree));
+const rotateRight = function (node) {
+  if (node == null || node.left == null) return node;
+  const node_left = node.left;
+  node.left = node_left.right;
+  node_left.right = node;
+  return node_left;
+};
+
+const rotateLeft = function (node) {
+  if (node == null || node.right == null) return node;
+  const node_right = node.right;
+  node.right = node_right.left;
+  node_right.left = node;
+  return node_right;
+};
+
+const depth = function (node) {
+  if (node === null) return 0;
+  const left_depth = depth(node.left);
+  const right_depth = depth(node.right);
+  return left_depth > right_depth ? left_depth + 1 : right_depth + 1;
+};
+
+const getBalanceFactor = function (node) {
+  const left_depth = depth(node.left);
+  const right_depth = depth(node.right);
+  return right_depth - left_depth;
+};
+
+const isLeafNode = function (node) {
+  console.log(node, '---')
+  return node.right == null && node.left == null;
+};
+
+const balance = function (node) {
+  if (node === null) return node;
+  const balance_factor = getBalanceFactor(node);
+  if (balance_factor >= -1 && balance_factor <= 1) {
+    node.left = balance(node.left);
+    node.right = balance(node.right);
+    return node;
+  }
+  node = balance_factor < 0 ? rotateRight(node) : rotateLeft(node);
+  return balance(node);
+};
+
+const printTree = function (tree) {
+  console.log(JSON.stringify(tree), '\n');
+};
+
+const tree = [4, 3, 5, 2, 6].reduce(insert, null);
+
+const balancedTree = balance(tree);
+printTree(balancedTree);

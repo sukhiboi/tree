@@ -33,20 +33,14 @@ Element copy(Element e)
 
 int main()
 {
-    Node tree = create_node(create_int_element(4));
-    insert_node(tree, int_comparer, create_int_element(3));
-    insert_node(tree, int_comparer, create_int_element(5));
-    insert_node(tree, int_comparer, create_int_element(2));
+    Node tree = create_node(create_int_element(7));
     insert_node(tree, int_comparer, create_int_element(6));
+    insert_node(tree, int_comparer, create_int_element(5));
+    insert_node(tree, int_comparer, create_int_element(4));
+    insert_node(tree, int_comparer, create_int_element(3));
+    insert_node(tree, int_comparer, create_int_element(2));
     insert_node(tree, int_comparer, create_int_element(1));
-    insert_node(tree, int_comparer, create_int_element(7));
-    balance_with_rotation(tree, int_comparer);
+    Node balanced_tree = balance_with_rotation(tree, int_comparer);
+    print_in_order(balanced_tree, display);
     return 0;
 }
-
-/*
-        4                                 4
-      3    5       --->              2         6
-    2        6                    1     3    5    7
-  1            7
-*/
