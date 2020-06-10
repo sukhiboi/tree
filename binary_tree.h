@@ -18,7 +18,7 @@ typedef enum
 } Equality;
 
 typedef void *Element;
-typedef int *Int;
+typedef int *int_ptr;
 typedef struct node
 {
     Element element;
@@ -26,21 +26,21 @@ typedef struct node
     struct node *right;
 } node;
 
-typedef node *Node;
+typedef node *node_ptr;
 typedef Equality (*Comparer)(Element, Element);
-typedef void (*Displayer)(Node);
+typedef void (*Displayer)(node_ptr);
 typedef Element (*Copier)(Element);
 
-Node create_node(Element);
-void insert_node(Node, Comparer, Element);
-void print_in_order(Node, Displayer);
-void print_pre_order(Node, Displayer);
-void print_post_order(Node, Displayer);
-Bool search(Node, Comparer, Element);
-Node right_rotate(Node node_to_rotate);
-Node left_rotate(Node node_to_rotate);
-Node delete (Node root, Node node_to_delete, Comparer compare, Copier copy);
-Node balance(Node root, Comparer compare);
-Node balance_with_rotation(Node root, Comparer compare);
+node_ptr create_node(Element);
+void insert_node(node_ptr, Comparer, Element);
+void print_in_order(node_ptr, Displayer);
+void print_pre_order(node_ptr, Displayer);
+void print_post_order(node_ptr, Displayer);
+Bool search(node_ptr, Comparer, Element);
+node_ptr right_rotate(node_ptr node_to_rotate);
+node_ptr left_rotate(node_ptr node_to_rotate);
+node_ptr delete (node_ptr root, node_ptr node_to_delete, Comparer compare, Copier copy);
+node_ptr balance(node_ptr root, Comparer compare);
+node_ptr balance_with_rotation(node_ptr root, Comparer compare);
 
 #endif
