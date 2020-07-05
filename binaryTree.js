@@ -4,7 +4,7 @@ const createNode = function (value) {
 
 const insert = function (tree, value) {
   if (tree == null) return createNode(value);
-  if (value < tree.value) tree.left = insert(tree.left, value);
+  if (value < tree.value) tree.left = insert(tree.left, value)
   else tree.right = insert(tree.right, value);
   return tree;
 };
