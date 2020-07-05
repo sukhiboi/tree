@@ -134,4 +134,4 @@ const printTree = function (tree) {
 const tree = [4, 3, 5, 2, 6].reduce(insert, null);
 
 const balancedTree = balance(tree);
-printTree(balancedTree);
+printTree(balancedTree)
